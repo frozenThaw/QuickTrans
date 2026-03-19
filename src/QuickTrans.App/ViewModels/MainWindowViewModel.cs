@@ -188,7 +188,7 @@ public sealed class MainWindowViewModel : ObservableObject, IDisposable
 
         try
         {
-            var result = await _translationService.TranslateToChineseAsync(normalizedInput, requestCts.Token);
+            var result = await _translationService.TranslateAsync(normalizedInput, requestCts.Token);
 
             if (!ReferenceEquals(_activeRequestCts, requestCts))
             {

@@ -4,5 +4,5 @@ namespace QuickTrans.App.Services;
 
 public interface ITranslationService
 {
-    Task<TranslationResult> TranslateToChineseAsync(string text, CancellationToken cancellationToken);
+    Task<TranslationResult> TranslateAsync(string text, CancellationToken cancellationToken);
 }

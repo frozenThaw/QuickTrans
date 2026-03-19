@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="QuickTrans"
-        Width="460"
+        Width="240"
         SizeToContent="WidthAndHeight"
         AllowsTransparency="True"
         Background="Transparent"
@@ -35,7 +35,7 @@
                           ShadowDepth="10" />
       </Border.Effect>
 
-      <Grid Width="420">
+      <Grid Width="220">
         <Grid.RowDefinitions>
           <RowDefinition Height="16" />
           <RowDefinition Height="Auto" />
@@ -54,17 +54,47 @@
                   CornerRadius="3" />
         </Border>
 
-        <Border Grid.Row="1" Padding="16,8,16,10">
-          <TextBox x:Name="InputTextBox"
-                   MinWidth="360"
-                   Background="Transparent"
-                   BorderThickness="0"
-                   FontFamily="Segoe UI"
-                   FontSize="16"
-                   Foreground="#FF0F172A"
-                   KeyDown="InputTextBox_OnKeyDown"
-                   GotKeyboardFocus="InputTextBox_OnGotKeyboardFocus"
-                   Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
+        <Border Grid.Row="1" Padding="12,8,12,10">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="8" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="InputTextBox"
+                     Grid.Column="0"
+                     MinWidth="120"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     FontFamily="Segoe UI"
+                     FontSize="16"
+                     Foreground="#FF0F172A"
+                     KeyDown="InputTextBox_OnKeyDown"
+                     GotKeyboardFocus="InputTextBox_OnGotKeyboardFocus"
+                     Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Button Grid.Column="2"
+                    Width="40"
+                    Height="40"
+                    Background="#FF111827"
+                    BorderThickness="0"
+                    Command="{Binding TranslateCommand}"
+                    Cursor="Hand"
+                    FontFamily="Segoe UI"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="#FFF8FAFC">
+              <Button.Template>
+                <ControlTemplate TargetType="Button">
+                  <Border Background="{TemplateBinding Background}" CornerRadius="12">
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                  </Border>
+                </ControlTemplate>
+              </Button.Template>
+              <TextBlock Text="译" />
+            </Button>
+          </Grid>
         </Border>
 
         <Border Grid.Row="2"
