@@ -132,44 +132,42 @@
     </Border>
 
     <Border x:Name="CollapsedShell"
-            Width="82"
-            Height="82"
+            Width="29"
+            Height="29"
             Margin="12"
-            Padding="12"
-            Background="#FF111827"
-            BorderBrush="#FF1F2937"
-            BorderThickness="1"
-            CornerRadius="41"
+            Background="Transparent"
+            BorderThickness="0"
+            CornerRadius="14.5"
             Visibility="{Binding IsExpanded, Converter={StaticResource InverseBoolToVisibilityConverter}}"
             MouseLeftButtonDown="CollapsedShell_OnMouseLeftButtonDown">
       <Border.Effect>
-        <DropShadowEffect BlurRadius="24"
+        <DropShadowEffect BlurRadius="12"
                           Color="#3B0F172A"
                           Direction="270"
-                          Opacity="0.32"
-                          ShadowDepth="8" />
+                          Opacity="0.24"
+                          ShadowDepth="4" />
       </Border.Effect>
 
       <Button x:Name="ExpandButton"
-              Width="58"
-              Height="58"
-              Background="#FFF8FAFC"
+              Width="29"
+              Height="29"
+              Background="#FF13ACDF"
               BorderThickness="0"
               Click="ExpandButton_OnClick"
               Command="{Binding ExpandCommand}"
               Cursor="Hand"
               FontFamily="Segoe UI"
-              FontSize="20"
+              FontSize="12"
               FontWeight="SemiBold"
-              Foreground="#FF111827">
+              Foreground="#FFF8FAFC">
         <Button.Template>
           <ControlTemplate TargetType="Button">
-            <Border Background="{TemplateBinding Background}" CornerRadius="29">
+            <Border Background="{TemplateBinding Background}" CornerRadius="14.5">
               <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
             </Border>
           </ControlTemplate>
         </Button.Template>
-        <TextBlock Text="中" />
+        <TextBlock Foreground="#FFFFFFFF" Text="译" />
       </Button>
     </Border>
   </Grid>
