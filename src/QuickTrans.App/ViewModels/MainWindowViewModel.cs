@@ -20,6 +20,7 @@ public sealed class MainWindowViewModel : ObservableObject, IDisposable
     private string _errorMessage = string.Empty;
     private bool _isBusy;
     private bool _isExpanded = true;
+    private bool _isWindowActive;
     private bool _isResultVisible;
     private DateTimeOffset _lastInteractionAt = DateTimeOffset.UtcNow;
     private CancellationTokenSource? _activeRequestCts;
@@ -141,6 +142,16 @@ public sealed class MainWindowViewModel : ObservableObject, IDisposable
         _lastInteractionAt = DateTimeOffset.UtcNow;
     }
 
+    public void SetWindowActive(bool isActive)
+    {
+        _isWindowActive = isActive;
+
+        if (isActive)
+        {
+            RegisterInteraction();
+        }
+    }
+
     public void Dispose()
     {
         _idleTimer.Stop();
@@ -248,7 +259,7 @@ public sealed class MainWindowViewModel : ObservableObject, IDisposable
 
     private void OnIdleTimerTick(object? sender, EventArgs e)
     {
-        if (!IsExpanded || IsBusy)
+        if (!IsExpanded || IsBusy || _isWindowActive)
         {
             return;
         }

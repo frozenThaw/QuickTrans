@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using QuickTrans.App.ViewModels;
 
 namespace QuickTrans.App.Views;
@@ -18,6 +19,8 @@ public partial class MainWindow : Window
         _viewModel = viewModel;
         DataContext = viewModel;
         Loaded += OnLoaded;
+        Activated += OnActivated;
+        Deactivated += OnDeactivated;
         _viewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
@@ -89,6 +92,16 @@ public partial class MainWindow : Window
         {
             Dispatcher.BeginInvoke(FocusInputTextBox, DispatcherPriority.Input);
         }
+    }
+
+    private void OnActivated(object? sender, EventArgs e)
+    {
+        _viewModel.SetWindowActive(true);
+    }
+
+    private void OnDeactivated(object? sender, EventArgs e)
+    {
+        _viewModel.SetWindowActive(false);
     }
 
     private void PositionWindow()
