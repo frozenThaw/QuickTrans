@@ -91,12 +91,6 @@ public partial class MainWindow : Window
 
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(MainWindowViewModel.InputText))
-        {
-            OnInputStateChanged();
-            return;
-        }
-
         if (e.PropertyName == nameof(MainWindowViewModel.IsBusy))
         {
             OnBusyStateChanged();
@@ -142,10 +136,9 @@ public partial class MainWindow : Window
 
     private void OnWindowMouseEnter(object sender, MouseEventArgs e)
     {
-        StopAutoHideTimer();
-
         if (_isHiddenAtEdge)
         {
+            StopAutoHideTimer();
             RevealFromEdge();
         }
     }
@@ -159,18 +152,6 @@ public partial class MainWindow : Window
     {
         StopAutoHideTimer();
         HideIntoEdgeIfNeeded();
-    }
-
-    private void OnInputStateChanged()
-    {
-        if (HasInput())
-        {
-            StopAutoHideTimer();
-            RevealFromEdge();
-            return;
-        }
-
-        ScheduleAutoHideIfNeeded();
     }
 
     private void OnBusyStateChanged()
@@ -201,16 +182,17 @@ public partial class MainWindow : Window
             _dockSide = DockSide.None;
             _isHiddenAtEdge = false;
             Left = Math.Max(workArea.Left, Math.Min(Left, workArea.Right - ActualWidth));
+            StopAutoHideTimer();
             return;
         }
 
         _dockSide = distanceToLeft <= distanceToRight ? DockSide.Left : DockSide.Right;
-        HideIntoEdgeIfNeeded();
+        ScheduleAutoHideIfNeeded();
     }
 
     private void HideIntoEdgeIfNeeded()
     {
-        if (_dockSide == DockSide.None || _viewModel.IsBusy)
+        if (_dockSide == DockSide.None || _viewModel.IsBusy || IsActive)
         {
             return;
         }
@@ -256,7 +238,7 @@ public partial class MainWindow : Window
     {
         StopAutoHideTimer();
 
-        if (_dockSide == DockSide.None || _isHiddenAtEdge || _viewModel.IsBusy || IsMouseOver || IsActive)
+        if (_dockSide == DockSide.None || _isHiddenAtEdge || _viewModel.IsBusy || IsActive)
         {
             return;
         }
@@ -279,12 +261,6 @@ public partial class MainWindow : Window
     {
         return EdgeRevealWidth + Math.Max(MainShell.Margin.Left, MainShell.Margin.Right);
     }
-
-    private bool HasInput()
-    {
-        return !string.IsNullOrWhiteSpace(_viewModel.InputText);
-    }
-
     private enum DockSide
     {
         None,
