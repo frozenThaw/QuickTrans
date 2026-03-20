@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="QuickTrans"
+        Icon="/Assets/AppIcon.ico"
         Width="240"
         SizeToContent="WidthAndHeight"
         AllowsTransparency="True"
